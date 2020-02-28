@@ -1,43 +1,58 @@
 package com.edu.postgrad.game.common;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import org.springframework.stereotype.Component;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "players")
+@Component
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     private String name;
 
+    @Column(name = "jersey_number")
     private int jerseyNumber;
 
-    private Date dob;
+    @Column( columnDefinition = "DATE")
+    private LocalDate dob;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "player_position")
+    private Position position;
 
     @ManyToOne(targetEntity = Team.class)
     private Team team;
 
-    public Player(){
+    @Transient
+    private int age;
 
+    public Player(){
     }
 
-    public Player(final String name, final int jerseyNumber, final Date dob){
-        this.name = name;
-        this.jerseyNumber = jerseyNumber;
-        this.dob = dob;
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public void setId(Long id) {
@@ -52,7 +67,7 @@ public class Player {
         this.jerseyNumber = jerseyNumber;
     }
 
-    public void setDob(Date dob) {
+    public void setDob(LocalDate dob) {
         this.dob = dob;
     }
 
@@ -68,8 +83,25 @@ public class Player {
         return jerseyNumber;
     }
 
-    public Date getDob() {
+    public LocalDate getDob() {
         return dob;
     }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
 
 }
