@@ -53,7 +53,7 @@ public class Player {
     @Column(name = "player_position")
     private Position position;
 
-    @ManyToOne(targetEntity = Team.class)
+    @ManyToOne(targetEntity = Team.class) //TODO cascade: how is it workign without casecade?
     private Team team;
 
     @Transient

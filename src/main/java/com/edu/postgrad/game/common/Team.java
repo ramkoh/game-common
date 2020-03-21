@@ -3,9 +3,11 @@ package com.edu.postgrad.game.common;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
@@ -24,10 +26,8 @@ public class Team {
 
     private String web;
 
-    private String representsState;
-
     @Size(min = 1, message = "Team must have at least 1 player.")
-    @OneToMany(targetEntity = Player.class)
+    @OneToMany(targetEntity = Player.class/*, fetch = FetchType.LAZY*/) //Could not write JSON: failed to lazily initialize a collection of role: com.edu.postgrad.game.common
     List<Player> players;
 
     public Long getId() {
@@ -46,13 +46,6 @@ public class Team {
         this.name = name;
     }
 
-    public String getRepresentsState() {
-        return representsState;
-    }
-
-    public void setRepresentsState(String representsState) {
-        this.representsState = representsState;
-    }
     public String getCode() {
         return code;
     }
