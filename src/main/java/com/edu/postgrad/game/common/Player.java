@@ -3,6 +3,7 @@ package com.edu.postgrad.game.common;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import javax.persistence.Column;
@@ -26,37 +27,44 @@ import javax.validation.constraints.Size;
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "Id of the player")
     private Long id;
 
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     @Column(name = "first_name")
+    @ApiModelProperty(notes = "First name of the player")
     private String firstName;
 
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     @Column(name = "last_name")
+    @ApiModelProperty(notes = "Second name of the player")
     private String lastName;
 
     @Column(name = "jersey_number")
     @Positive
+    @ApiModelProperty(notes = "Jersey Number of the player")
     private int jerseyNumber;
 
     @Column( columnDefinition = "DATE")
     @NotNull
     @Past
-    //@JsonFormat(pattern="yyyy-MM-dd")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @ApiModelProperty(notes = "Date of birth of the player")
     private LocalDate dob;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "player_position")
+    @ApiModelProperty(notes = "Date of birth of the player")
     private Position position;
 
     @ManyToOne(targetEntity = Team.class) //TODO cascade: how is it workign without casecade?
+    @ApiModelProperty(notes = "Team for which player is playing")
     private Team team;
 
     @Transient
+    @ApiModelProperty(notes = "Age of the player")
     private int age;
 
     public Player(){

@@ -2,6 +2,7 @@ package com.edu.postgrad.game.common;
 
 import java.time.LocalDateTime;
 
+import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,16 +18,21 @@ public class Match {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty(notes = "Id of the match")
     private Long id;
 
+    @ApiModelProperty(notes = "Team 1 playing the match")
     private Long team1;
 
+    @ApiModelProperty(notes = "Team 2 playing the match")
     private Long team2;
 
-    @Min(value = 3, message = "Location name cannot be smaller than 3 characters.")
+    @Min(value = 3, message = "Location name cannot be smaller than 3 characters")
+    @ApiModelProperty(notes = "Location where match is being played")
     private String location;
 
     @Future
+    @ApiModelProperty(notes = "Date and time when match will be played")
     private LocalDateTime dateTime;
 
 
