@@ -3,6 +3,7 @@ package com.edu.postgrad.game.common;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -21,50 +22,55 @@ import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
+@ApiModel(description = "Entity to hold player data")
 @Entity
 @Table(name = "players")
 @Component
 public class Player {
+    @ApiModelProperty(notes = "Id of the player")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "Id of the player")
     private Long id;
 
+    @ApiModelProperty(notes = "First name of the player")
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     @Column(name = "first_name")
-    @ApiModelProperty(notes = "First name of the player")
     private String firstName;
 
+    @ApiModelProperty(notes = "Second name of the player")
     @NotNull
     @Size(min=5, message="Name must be at least 5 characters long")
     @Column(name = "last_name")
-    @ApiModelProperty(notes = "Second name of the player")
     private String lastName;
 
+    @ApiModelProperty(notes = "Jersey Number of the player")
     @Column(name = "jersey_number")
     @Positive
-    @ApiModelProperty(notes = "Jersey Number of the player")
     private int jerseyNumber;
 
+    @ApiModelProperty(notes = "Date of birth of the player")
     @Column( columnDefinition = "DATE")
     @NotNull
     @Past
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    @ApiModelProperty(notes = "Date of birth of the player")
     private LocalDate dob;
 
+    @ApiModelProperty(notes = "Date of birth of the player")
     @Enumerated(EnumType.STRING)
     @Column(name = "player_position")
-    @ApiModelProperty(notes = "Date of birth of the player")
     private Position position;
 
-    @ManyToOne(targetEntity = Team.class) //TODO cascade: how is it workign without casecade?
     @ApiModelProperty(notes = "Team for which player is playing")
+    @ManyToOne(targetEntity = Team.class) //TODO cascade: how is it workign without casecade?
     private Team team;
 
-    @Transient
+    @ApiModelProperty(notes = "Country in which player is born")
+    @Column(name = "country_of_birth")
+    private String countryOfBirth;
+
     @ApiModelProperty(notes = "Age of the player")
+    @Transient
     private int age;
 
     public Player(){
@@ -125,12 +131,21 @@ public class Player {
     public void setTeam(Team team) {
         this.team = team;
     }
+
     public String getFirstName() {
         return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getCountryOfBirth() {
+        return countryOfBirth;
+    }
+
+    public void setCountryOfBirth(String countryOfBirth) {
+        this.countryOfBirth = countryOfBirth;
     }
 
 }

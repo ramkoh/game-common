@@ -2,7 +2,10 @@ package com.edu.postgrad.game.common;
 
 import java.time.LocalDateTime;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.format.annotation.DateTimeFormat;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +14,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "matches")
+@ApiModel(description = "Model to hold match data")
 public class Match {
 
     @Id
@@ -22,18 +27,20 @@ public class Match {
     private Long id;
 
     @ApiModelProperty(notes = "Team 1 playing the match")
-    private Long team1;
+    private String team1;
 
     @ApiModelProperty(notes = "Team 2 playing the match")
-    private Long team2;
+    private String team2;
 
-    @Min(value = 3, message = "Location name cannot be smaller than 3 characters")
+    @Size(min = 3, message = "Location name cannot be smaller than 3 characters")
     @ApiModelProperty(notes = "Location where match is being played")
     private String location;
 
+    @Column( columnDefinition = "DATE", name = "match_date_time")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @Future
     @ApiModelProperty(notes = "Date and time when match will be played")
-    private LocalDateTime dateTime;
+    private LocalDateTime matchDateTime;
 
 
     public Match() {
@@ -47,19 +54,19 @@ public class Match {
         this.id = id;
     }
 
-    public Long getTeam1() {
+    public String getTeam1() {
         return team1;
     }
 
-    public void setTeam1(Long team1) {
+    public void setTeam1(String team1) {
         this.team1 = team1;
     }
 
-    public Long getTeam2() {
+    public String getTeam2() {
         return team2;
     }
 
-    public void setTeam2(Long team2) {
+    public void setTeam2(String team2) {
         this.team2 = team2;
     }
 
@@ -71,13 +78,11 @@ public class Match {
         this.location = location;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getMatchDateTime() {
+        return matchDateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setMatchDateTime(LocalDateTime matchDateTime) {
+        this.matchDateTime = matchDateTime;
     }
-
-
 }

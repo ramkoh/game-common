@@ -2,6 +2,7 @@ package com.edu.postgrad.game.common;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "teams")
+@ApiModel(description = "Model to hold team data")
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
