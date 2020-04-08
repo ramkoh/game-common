@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
@@ -34,13 +36,12 @@ public class Player {
 
     @ApiModelProperty(notes = "First name of the player")
     @NotNull
-    @Size(min=5, message="Name must be at least 5 characters long")
+    @Size(min=3, message="Name must be at least 5 characters long")
     @Column(name = "first_name")
     private String firstName;
 
     @ApiModelProperty(notes = "Second name of the player")
     @NotNull
-    @Size(min=5, message="Name must be at least 5 characters long")
     @Column(name = "last_name")
     private String lastName;
 
@@ -62,7 +63,7 @@ public class Player {
     private Position position;
 
     @ApiModelProperty(notes = "Team for which player is playing")
-    @ManyToOne(targetEntity = Team.class) //TODO cascade: how is it workign without casecade?
+    @ManyToOne
     private Team team;
 
     @ApiModelProperty(notes = "Country in which player is born")
@@ -74,6 +75,10 @@ public class Player {
     private int age;
 
     public Player(){
+    }
+
+    public Player(Long id){
+    this.id = id;
     }
 
     public int getAge() {

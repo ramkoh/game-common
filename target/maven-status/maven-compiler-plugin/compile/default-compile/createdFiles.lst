@@ -1,4 +1,5 @@
+com/edu/postgrad/game/common/Tournament.class
+com/edu/postgrad/game/common/Match.class
 com/edu/postgrad/game/common/Team.class
 com/edu/postgrad/game/common/Position.class
 com/edu/postgrad/game/common/Player.class
-com/edu/postgrad/game/common/CommonApplication.class
